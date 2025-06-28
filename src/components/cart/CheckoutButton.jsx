@@ -15,6 +15,7 @@ import toast from 'react-hot-toast';
  * Handles checkout validation and payment initiation
  */
 const CheckoutButton = ({ cartState }) => {
+  console.log('🛒 CheckoutButton: Rendering with cartState:', cartState);
   const navigate = useNavigate();
   const { user } = useAuth();
   const { setCartStatus, refreshCartData } = useCart();

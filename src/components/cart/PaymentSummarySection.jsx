@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Wallet } from 'lucide-react';
 import { useCart } from '../../hooks/useCart';
 import { Switch } from '@/components/ui/switch';
+import { calculatePaymentAmounts } from '../../utils/paymentCalculations';
 
 /**
  * Payment Summary Section Component
@@ -26,6 +27,9 @@ const PaymentSummarySection = ({ cartState }) => {
     noOfPackageItems,
     status
   } = cartState;
+
+  // Calculate standardized payment amounts (same as CheckoutButton)
+  const standardizedCalculations = calculatePaymentAmounts(cartState);
 
   const isLoading = status === 'cartLoading';
 
@@ -376,25 +380,11 @@ const PaymentSummarySection = ({ cartState }) => {
         {/* Spacing before Grand Total */}
         <div className="my-2.5" />
 
-        {/* Grand Total - matches Flutter logic exactly */}
+        {/* Grand Total - uses standardized calculation (same as CheckoutButton "To Pay") */}
         <div className="flex justify-between items-center">
           <span className="font-bold text-base text-gray-900">Grand Total</span>
           <span className="font-bold text-base text-gray-900">
-            {(() => {
-              // VIP payments: No wallet deduction (matches Flutter VIP logic)
-              if (paymentType === 'vip') {
-                return formatCurrency(finalTotalAmount);
-              }
-
-              // Full/Partial payments: Apply wallet deduction if enabled
-              if (isWalletEnabled && cartData.user_wallet_amount && parseFloat(cartData.user_wallet_amount) > 0) {
-                const walletAmount = parseFloat(cartData.user_wallet_amount);
-                const afterWalletDeduction = Math.max(0, finalTotalAmount - walletAmount);
-                return formatCurrency(afterWalletDeduction);
-              }
-
-              return formatCurrency(finalTotalAmount);
-            })()}
+            {formatCurrency(standardizedCalculations.finalTotalAmount)}
           </span>
         </div>
 

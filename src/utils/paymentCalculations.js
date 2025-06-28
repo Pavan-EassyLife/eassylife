@@ -67,21 +67,44 @@ export const calculatePaymentAmounts = (cartState) => {
     // Uses vip_full_amount directly from API + tips/donations
     finalTotalAmount = vipPlanAmount + tipPrice + donationPrice;
     finalTotalDiscountAmount = vipPlanDiscountAmount;
+    console.log('💰 Payment Calculation - VIP Mode:', {
+      vipPlanAmount,
+      tipPrice,
+      donationPrice,
+      finalTotalAmount,
+      selectedVipPlan: selectedVipPlan?.plan_name
+    });
   } else if (paymentType === PaymentTypes.PARTIAL) {
     // Partial payment calculation
     const partialAmount = parseFloat(cartData.partialPayment || '0');
     finalTotalAmount = partialAmount + tipPrice + donationPrice;
     finalRemainingAmounts = parseFloat(cartData.leftBalance || '0');
+    console.log('💰 Payment Calculation - Partial Mode:', {
+      partialAmount,
+      tipPrice,
+      donationPrice,
+      finalTotalAmount
+    });
   } else {
-    // Full payment calculation
+    // Full payment calculation (normal mode)
     if (isCouponApplied && couponData) {
       // With coupon applied
       finalTotalAmount = parseFloat(couponData.itemDiscountAmount || '0') + tipPrice + donationPrice;
       finalTotalDiscountAmount = parseFloat(couponData.couponValue || '0');
     } else {
-      // Without coupon
-      finalTotalAmount = serviceItemsTotalAmount + tipPrice + donationPrice;
+      // Without coupon - use total_price for normal payment
+      const normalAmount = parseFloat(cartData.total_price || cartData.total_service_amount || '0');
+      finalTotalAmount = normalAmount + tipPrice + donationPrice;
     }
+    console.log('💰 Payment Calculation - Normal Mode:', {
+      total_price: cartData.total_price,
+      total_service_amount: cartData.total_service_amount,
+      normalAmount: parseFloat(cartData.total_price || cartData.total_service_amount || '0'),
+      tipPrice,
+      donationPrice,
+      finalTotalAmount,
+      isCouponApplied
+    });
   }
 
   // Apply wallet deduction if enabled (matches Flutter wallet logic)
@@ -104,7 +127,7 @@ export const calculatePaymentAmounts = (cartState) => {
     taxAndOtherServiceAmount,
     finalTotalAmount,
     finalTotalDiscountAmount,
-    finalRemainingAmounts,
+    finalRemainingAmounts: finalRemainingAmounts,
     walletDeductionAmount
   };
 };

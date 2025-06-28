@@ -59,7 +59,7 @@ class RazorpayService {
    * @returns {string} Razorpay key
    */
   getRazorpayKey() {
-    const isLocal = import.meta.env.VITE_APP_ENV === 'local' || import.meta.env.DEV;
+    const isLocal = import.meta.env.VITE_APP_ENV === 'development' || import.meta.env.DEV;
     
     // Keys from Flutter implementation
     const keys = {

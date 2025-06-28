@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useServiceDetails, useBookingState } from '../../hooks/useServiceDetails';
 import { useDynamicAttributes } from '../../hooks/useDynamicAttributes';
@@ -7,11 +7,15 @@ import { useAddressContext } from '../../contexts/AddressContext';
 import DynamicAttributeSelector from '../../components/serviceDetails/DynamicAttributeSelector';
 import AttributeErrorBoundary from '../../components/serviceDetails/AttributeErrorBoundary';
 import AttributeValidationFeedback from '../../components/serviceDetails/AttributeValidationFeedback';
+import AddressSelectionModal from '../../components/cart/AddressSelectionModal';
+import DatePickerModal from '../../components/serviceDetails/pickers/DatePickerModal';
+import TimePickerModal from '../../components/serviceDetails/pickers/TimePickerModal';
 import {
   ArrowLeft,
   MapPin,
   Calendar,
-  Heart
+  Heart,
+  Clock
 } from 'lucide-react';
 
 /**
@@ -52,8 +56,18 @@ const ServiceDetailsContent = () => {
   const {
     selectedDate,
     timeFromValue,
-    timeToValue
+    timeToValue,
+    selectDate,
+    selectTimeFrom,
+    selectTimeTo,
+    availableTimeSlots
   } = useBookingState();
+
+  // Modal states
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [isDateModalOpen, setIsDateModalOpen] = useState(false);
+  const [isTimeModalOpen, setIsTimeModalOpen] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
 
   useEffect(() => {
     if (serviceId && fetchServiceDetails) {
@@ -66,6 +80,44 @@ const ServiceDetailsContent = () => {
 
   const handleBack = () => {
     navigate(-1);
+  };
+
+  // Address change handlers
+  const handleAddressChange = () => {
+    setIsAddressModalOpen(true);
+  };
+
+  const handleAddressSelect = (address) => {
+    setSelectedAddress(address);
+    setIsAddressModalOpen(false);
+    console.log('🏠 ServiceDetails: Address selected:', address);
+  };
+
+  const handleAddNewAddress = () => {
+    setIsAddressModalOpen(false);
+    // Navigate to add address page
+    navigate('/add-address', {
+      state: { returnTo: `/service-details/${serviceId}${subServiceId ? `/${subServiceId}` : ''}` }
+    });
+  };
+
+  // Date and time change handlers
+  const handleDateTimeChange = () => {
+    setIsDateModalOpen(true);
+  };
+
+  const handleDateSelect = (date) => {
+    selectDate(date);
+    setIsDateModalOpen(false);
+    // Auto-open time picker after date selection
+    setTimeout(() => setIsTimeModalOpen(true), 300);
+  };
+
+  const handleTimeSelect = (timeSlot) => {
+    selectTimeFrom(timeSlot.from);
+    selectTimeTo(timeSlot.to);
+    setIsTimeModalOpen(false);
+    console.log('⏰ ServiceDetails: Time slot selected:', timeSlot);
   };
 
   // Handle continue button click - navigate to service provider page
@@ -538,11 +590,25 @@ const ServiceDetailsContent = () => {
             <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
               <div className="flex items-center flex-1">
                 <MapPin className="w-5 h-5 text-gray-600 mr-3" />
-                <span className="text-gray-700 text-sm flex-1">
-                  Lodha , powai, Mahatma Jyotiba Phule Nagar IIT Market, Powai, Mumbai, Maharashtra, 400076
-                </span>
+                <div className="flex-1">
+                  <span className={`text-sm ${selectedAddress ? 'text-gray-700' : 'text-gray-600'}`}>
+                    {selectedAddress
+                      ? `${selectedAddress.address_line_1 || selectedAddress.addressLine1 || ''}, ${selectedAddress.city || ''}, ${selectedAddress.state || ''}, ${selectedAddress.pincode || selectedAddress.zipCode || ''}`
+                      : primaryAddress?.formattedAddress
+                      || 'Lodha , powai, Mahatma Jyotiba Phule Nagar IIT Market, Powai, Mumbai, Maharashtra, 400076'
+                    }
+                  </span>
+                  {selectedAddress && (
+                    <div className="text-xs text-green-600 mt-1">
+                      ✓ Custom address selected
+                    </div>
+                  )}
+                </div>
               </div>
-              <button className="text-blue-500 font-medium text-sm ml-3">
+              <button
+                className="text-blue-500 font-medium text-sm ml-3 hover:text-blue-600 transition-colors"
+                onClick={handleAddressChange}
+              >
                 Change
               </button>
             </div>
@@ -552,21 +618,32 @@ const ServiceDetailsContent = () => {
           <div className="mb-5">
             <div className="p-4 bg-gray-50 rounded-lg">
               <div className="flex items-center justify-between">
-                <div className="flex items-center">
+                <div className="flex items-center flex-1">
                   <Calendar className="w-5 h-5 text-gray-600 mr-3" />
-                  <span className="text-gray-700 text-sm">
-                    {selectedDate
-                      ? `${selectedDate.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })} 🕐 ${timeFromValue || '10:00'} - ${timeToValue || '11:00'}`
-                      : 'Thu, 26th Jun 2025 🕐 10:00 AM - 11:00 AM'
-                    }
-                  </span>
+                  <div className="flex flex-col">
+                    <span className={`text-sm ${selectedDate ? 'text-gray-700' : 'text-gray-500'}`}>
+                      {selectedDate
+                        ? selectedDate.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })
+                        : 'Select Date & Time'
+                      }
+                    </span>
+                    {(timeFromValue && timeToValue) ? (
+                      <div className="flex items-center mt-1">
+                        <Clock className="w-4 h-4 text-gray-500 mr-1" />
+                        <span className="text-gray-600 text-xs">
+                          {timeFromValue} - {timeToValue}
+                        </span>
+                      </div>
+                    ) : selectedDate && (
+                      <span className="text-gray-500 text-xs mt-1">
+                        Tap to select time slot
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <button
-                  className="text-blue-500 font-medium text-sm"
-                  onClick={() => {
-                    // TODO: Open date/time picker modal
-                    console.log('🔧 Date/Time change clicked - implement date/time picker');
-                  }}
+                  className="text-blue-500 font-medium text-sm hover:text-blue-600 transition-colors"
+                  onClick={handleDateTimeChange}
                 >
                   Change
                 </button>
@@ -605,6 +682,46 @@ const ServiceDetailsContent = () => {
           </div>
         </div>
       </div>
+
+      {/* Address Selection Modal */}
+      <AddressSelectionModal
+        isOpen={isAddressModalOpen}
+        onClose={() => setIsAddressModalOpen(false)}
+        onAddressSelect={handleAddressSelect}
+        onAddNewAddress={handleAddNewAddress}
+        currentAddressId={selectedAddress?.id || primaryAddress?.id}
+        isLoading={false}
+      />
+
+      {/* Date Picker Modal */}
+      <DatePickerModal
+        isOpen={isDateModalOpen}
+        onClose={() => setIsDateModalOpen(false)}
+        onDateSelect={handleDateSelect}
+        selectedDate={selectedDate}
+        minDate={new Date()}
+        maxDate={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)} // 30 days from now
+      />
+
+      {/* Time Picker Modal */}
+      <TimePickerModal
+        isOpen={isTimeModalOpen}
+        onClose={() => setIsTimeModalOpen(false)}
+        onTimeSelect={handleTimeSelect}
+        selectedTimeFrom={timeFromValue}
+        selectedTimeTo={timeToValue}
+        availableSlots={availableTimeSlots || [
+          // Default time slots if none available
+          { from: '09:00', to: '10:00', available: true },
+          { from: '10:00', to: '11:00', available: true },
+          { from: '11:00', to: '12:00', available: true },
+          { from: '14:00', to: '15:00', available: true },
+          { from: '15:00', to: '16:00', available: true },
+          { from: '16:00', to: '17:00', available: true },
+          { from: '17:00', to: '18:00', available: true }
+        ]}
+        serviceDuration={60}
+      />
     </div>
   );
 };

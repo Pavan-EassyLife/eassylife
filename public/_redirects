@@ -1,0 +1,24 @@
+# Redirect all routes to index.html for client-side routing
+/*    /index.html   200
+
+# API routes (if you have any backend API)
+/api/*  /api/:splat  200
+
+# Static assets with caching
+/assets/*  /assets/:splat  200  Cache-Control: max-age=31536000,immutable
+/images/*  /images/:splat  200  Cache-Control: max-age=31536000,immutable
+/icons/*   /icons/:splat   200  Cache-Control: max-age=31536000,immutable
+
+# Specific file types with caching
+/*.js      /:splat.js      200  Cache-Control: max-age=31536000,immutable
+/*.css     /:splat.css     200  Cache-Control: max-age=31536000,immutable
+/*.png     /:splat.png     200  Cache-Control: max-age=31536000,immutable
+/*.jpg     /:splat.jpg     200  Cache-Control: max-age=31536000,immutable
+/*.jpeg    /:splat.jpeg    200  Cache-Control: max-age=31536000,immutable
+/*.gif     /:splat.gif     200  Cache-Control: max-age=31536000,immutable
+/*.svg     /:splat.svg     200  Cache-Control: max-age=31536000,immutable
+/*.ico     /:splat.ico     200  Cache-Control: max-age=31536000,immutable
+/*.woff    /:splat.woff    200  Cache-Control: max-age=31536000,immutable
+/*.woff2   /:splat.woff2   200  Cache-Control: max-age=31536000,immutable
+/*.ttf     /:splat.ttf     200  Cache-Control: max-age=31536000,immutable
+/*.eot     /:splat.eot     200  Cache-Control: max-age=31536000,immutable

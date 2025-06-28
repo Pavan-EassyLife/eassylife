@@ -1,0 +1,289 @@
+/* EassyLife Orange Gradient System */
+/* This file provides consistent gradient utilities across the application */
+
+/* ===== BACKGROUND GRADIENTS ===== */
+
+/* Primary gradient for main elements */
+.bg-gradient-orange {
+  background: var(--gradient-primary);
+}
+
+.bg-gradient-orange-reverse {
+  background: var(--gradient-primary-reverse);
+}
+
+.bg-gradient-orange-hover {
+  background: var(--gradient-hover);
+}
+
+.bg-gradient-orange-vertical {
+  background: var(--gradient-vertical);
+}
+
+.bg-gradient-orange-horizontal {
+  background: var(--gradient-horizontal);
+}
+
+.bg-gradient-orange-overlay {
+  background: var(--gradient-overlay);
+}
+
+.bg-gradient-orange-subtle {
+  background: var(--gradient-subtle);
+}
+
+/* ===== BUTTON GRADIENTS ===== */
+
+.btn-gradient-primary {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  transition: all 300ms ease-in-out;
+}
+
+.btn-gradient-primary:hover {
+  background: var(--gradient-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 163, 0, 0.3);
+}
+
+.btn-gradient-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(255, 163, 0, 0.2);
+}
+
+/* ===== CARD GRADIENTS ===== */
+
+.card-gradient-border {
+  background: white;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.card-gradient-border::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: var(--gradient-primary);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.card-gradient-subtle {
+  background: linear-gradient(135deg, rgba(255, 184, 77, 0.05), rgba(255, 163, 0, 0.05));
+  border: 1px solid rgba(255, 163, 0, 0.1);
+}
+
+/* ===== TEXT GRADIENTS ===== */
+
+.text-gradient-orange {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ===== ICON GRADIENTS ===== */
+
+.icon-gradient-orange {
+  background: var(--gradient-primary);
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+
+/* ===== INTERACTIVE ELEMENTS ===== */
+
+.nav-tab-gradient {
+  position: relative;
+  transition: all 300ms ease-in-out;
+}
+
+.nav-tab-gradient.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  border-radius: 2px 2px 0 0;
+}
+
+.nav-tab-gradient:hover {
+  color: var(--orange-primary);
+  transform: scale(1.05);
+}
+
+/* ===== FORM ELEMENTS ===== */
+
+.input-gradient-focus {
+  transition: all 300ms ease-in-out;
+}
+
+.input-gradient-focus:focus {
+  border-color: var(--orange-primary);
+  box-shadow: 0 0 0 3px rgba(255, 163, 0, 0.1);
+  outline: none;
+}
+
+.input-gradient-focus:focus::placeholder {
+  color: var(--orange-light);
+}
+
+/* ===== PROGRESS BARS ===== */
+
+.progress-gradient {
+  background: var(--gradient-primary);
+  border-radius: 10px;
+  height: 8px;
+  transition: all 300ms ease-in-out;
+}
+
+.progress-gradient-container {
+  background: rgba(255, 163, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ===== FLOATING ELEMENTS ===== */
+
+.floating-gradient {
+  background: var(--gradient-primary);
+  box-shadow: 0 4px 20px rgba(255, 163, 0, 0.3);
+  transition: all 300ms ease-in-out;
+}
+
+.floating-gradient:hover {
+  background: var(--gradient-hover);
+  box-shadow: 0 8px 30px rgba(255, 163, 0, 0.4);
+  transform: scale(1.05);
+}
+
+/* ===== BANNER GRADIENTS ===== */
+
+.banner-gradient-overlay {
+  position: relative;
+}
+
+.banner-gradient-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-overlay);
+  z-index: 1;
+}
+
+.banner-gradient-overlay > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== LOADING STATES ===== */
+
+.loading-gradient {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 184, 77, 0.1) 0%,
+    rgba(255, 163, 0, 0.3) 50%,
+    rgba(255, 184, 77, 0.1) 100%
+  );
+  background-size: 200% 100%;
+  animation: loading-shimmer 2s infinite;
+}
+
+@keyframes loading-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ===== HOVER EFFECTS ===== */
+
+.hover-gradient-scale {
+  transition: all 300ms ease-in-out;
+}
+
+.hover-gradient-scale:hover {
+  background: var(--gradient-hover);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(255, 163, 0, 0.2);
+}
+
+/* ===== RESPONSIVE GRADIENTS ===== */
+
+@media (max-width: 768px) {
+  .mobile-gradient-adjust {
+    background: var(--gradient-vertical);
+  }
+  
+  .btn-gradient-primary {
+    min-height: 44px;
+    padding: 12px 20px;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-gradient-primary,
+  .hover-gradient-scale,
+  .floating-gradient,
+  .nav-tab-gradient {
+    transition: none;
+  }
+  
+  .loading-gradient {
+    animation: none;
+    background: rgba(255, 163, 0, 0.1);
+  }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+
+@media (prefers-contrast: high) {
+  .btn-gradient-primary {
+    background: var(--orange-dark);
+    border: 2px solid var(--orange-primary);
+  }
+  
+  .text-gradient-orange {
+    background: var(--orange-dark);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* ===== UTILITY CLASSES ===== */
+
+.gradient-border-bottom {
+  border-bottom: 3px solid transparent;
+  background: linear-gradient(white, white) padding-box,
+              var(--gradient-primary) border-box;
+}
+
+.gradient-text-shadow {
+  text-shadow: 0 2px 4px rgba(255, 163, 0, 0.3);
+}
+
+.gradient-box-shadow {
+  box-shadow: 0 4px 20px rgba(255, 163, 0, 0.15);
+}
+
+.gradient-box-shadow-hover:hover {
+  box-shadow: 0 8px 30px rgba(255, 163, 0, 0.25);
+}

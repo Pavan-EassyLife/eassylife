@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="400" height="600" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 100C0 44.7715 44.7715 0 100 0H300C355.228 0 400 44.7715 400 100V600H0V100Z" fill="#FFA301"/>
+  <path d="M0 150H400V600H0V150Z" fill="#FFA301"/>
+  <path d="M-50 250C-50 250 50 200 150 250C250 300 350 250 450 300" stroke="white" stroke-width="2" stroke-opacity="0.2"/>
+  <path d="M-50 300C-50 300 50 250 150 300C250 350 350 300 450 350" stroke="white" stroke-width="2" stroke-opacity="0.2"/>
+  <path d="M-50 350C-50 350 50 300 150 350C250 400 350 350 450 400" stroke="white" stroke-width="2" stroke-opacity="0.2"/>
+  <path d="M-50 400C-50 400 50 350 150 400C250 450 350 400 450 450" stroke="white" stroke-width="2" stroke-opacity="0.2"/>
+  <path d="M-50 450C-50 450 50 400 150 450C250 500 350 450 450 500" stroke="white" stroke-width="2" stroke-opacity="0.2"/>
+  <path d="M-50 500C-50 500 50 450 150 500C250 550 350 500 450 550" stroke="white" stroke-width="2" stroke-opacity="0.2"/>
+  <path d="M-50 550C-50 550 50 500 150 550C250 600 350 550 450 600" stroke="white" stroke-width="2" stroke-opacity="0.2"/>
+</svg>

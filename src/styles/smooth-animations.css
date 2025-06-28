@@ -1,0 +1,350 @@
+/* Smooth Animations CSS Utilities */
+/* Fixes for common hover animation issues like shaking, jittering, and poor performance */
+
+/* Base smooth animation class - prevents shaking and jittering */
+.smooth-base {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  image-rendering: crisp-edges;
+  transform-origin: center center;
+  /* Enhanced text rendering */
+  text-rendering: geometricPrecision;
+  /* Force hardware acceleration */
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  /* Prevent subpixel rendering issues */
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+}
+
+/* Text-specific anti-distortion class */
+.crisp-text {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  /* Prevent text from inheriting parent transform distortions */
+  position: relative;
+  z-index: 1;
+  /* Force pixel-perfect rendering */
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  /* Prevent text selection during animations */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Additional text optimization */
+  font-kerning: normal;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  /* Force crisp text rendering */
+  font-smooth: never;
+  -webkit-font-smooth: never;
+}
+
+/* Ultra-crisp text for critical elements */
+.ultra-crisp-text {
+  @apply crisp-text;
+  /* Aggressive text anti-distortion */
+  -webkit-transform: translate3d(0, 0, 0) translateZ(0);
+  -moz-transform: translate3d(0, 0, 0) translateZ(0);
+  -ms-transform: translate3d(0, 0, 0) translateZ(0);
+  -o-transform: translate3d(0, 0, 0) translateZ(0);
+  /* Force text to stay on its own layer */
+  contain: layout style paint;
+  isolation: isolate;
+  /* Prevent any text distortion */
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+/* Crisp text card wrapper */
+.crisp-text-card {
+  /* Ultra-aggressive hardware acceleration */
+  will-change: transform, box-shadow;
+  transform: translate3d(0, 0, 0) translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform-origin: center center;
+
+  /* Force GPU layer creation */
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+
+  /* Prevent subpixel rendering */
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+
+  /* Enhanced text rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+
+  /* Force integer pixel positioning */
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+
+  /* Prevent layout shifts */
+  contain: layout style paint;
+
+  /* Optimize for animations */
+  isolation: isolate;
+}
+
+/* Text wrapper inside crisp cards */
+.crisp-text-wrapper {
+  /* Text-specific anti-distortion layer */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+
+  /* Force text to stay on its own layer */
+  position: relative;
+  z-index: 1;
+
+  /* Prevent text from inheriting transform distortions */
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+
+  /* Additional text optimization */
+  font-kerning: normal;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+
+  /* Prevent text selection during animation */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  /* Force crisp text rendering */
+  font-smooth: never;
+  -webkit-font-smooth: never;
+}
+
+/* Card hover animations */
+.smooth-card {
+  @apply smooth-base;
+  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.smooth-card:hover {
+  transform: translate3d(0, -2px, 0) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Button hover animations */
+.smooth-button {
+  @apply smooth-base;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-button:hover {
+  transform: translate3d(0, -1px, 0) scale(1.01);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Subtle hover animations */
+.smooth-subtle {
+  @apply smooth-base;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-subtle:hover {
+  transform: translate3d(0, 0, 0) scale(1.005);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Image hover animations - prevents image distortion */
+.smooth-image {
+  @apply smooth-base;
+  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+}
+
+.smooth-image:hover {
+  transform: translate3d(0, 0, 0) scale(1.05);
+}
+
+.smooth-image img {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  transition: inherit;
+}
+
+/* Text hover animations - prevents text shaking */
+.smooth-text {
+  @apply smooth-base;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-text:hover {
+  transform: translate3d(0, 0, 0);
+  color: #fb923c;
+}
+
+/* Icon hover animations */
+.smooth-icon {
+  @apply smooth-base;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-icon:hover {
+  transform: translate3d(0, 0, 0) scale(1.1);
+}
+
+/* Fade hover animations */
+.smooth-fade {
+  @apply smooth-base;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-fade:hover {
+  opacity: 0.8;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Glow hover animations */
+.smooth-glow {
+  @apply smooth-base;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-glow:hover {
+  transform: translate3d(0, 0, 0);
+  box-shadow: 0 0 20px rgba(251, 146, 60, 0.3);
+}
+
+/* Ultra-smooth transitions for premium feel */
+.ultra-smooth {
+  @apply smooth-base;
+  transition: all 600ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.ultra-smooth:hover {
+  transform: translate3d(0, -3px, 0) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Performance optimized hover for mobile */
+@media (hover: hover) and (pointer: fine) {
+  .mobile-optimized {
+    @apply smooth-base;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .mobile-optimized:hover {
+    transform: translate3d(0, -1px, 0) scale(1.01);
+  }
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) {
+  .smooth-card:hover,
+  .smooth-button:hover,
+  .smooth-subtle:hover,
+  .smooth-image:hover,
+  .smooth-text:hover,
+  .smooth-icon:hover,
+  .smooth-fade:hover,
+  .smooth-glow:hover,
+  .ultra-smooth:hover,
+  .mobile-optimized:hover {
+    transform: none;
+    box-shadow: none;
+    opacity: 1;
+    color: inherit;
+  }
+}
+
+/* Focus states for accessibility */
+.smooth-card:focus,
+.smooth-button:focus,
+.smooth-subtle:focus {
+  outline: 2px solid #fb923c;
+  outline-offset: 2px;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .smooth-base,
+  .smooth-card,
+  .smooth-button,
+  .smooth-subtle,
+  .smooth-image,
+  .smooth-text,
+  .smooth-icon,
+  .smooth-fade,
+  .smooth-glow,
+  .ultra-smooth,
+  .mobile-optimized {
+    transition: none;
+    animation: none;
+  }
+  
+  .smooth-card:hover,
+  .smooth-button:hover,
+  .smooth-subtle:hover,
+  .smooth-image:hover,
+  .smooth-text:hover,
+  .smooth-icon:hover,
+  .smooth-fade:hover,
+  .smooth-glow:hover,
+  .ultra-smooth:hover,
+  .mobile-optimized:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* ===== KEYFRAME ANIMATIONS ===== */
+
+/* Gradient animation for banners and promotional elements */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Fade in animation for banner transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Banner fade in utility class */
+.banner-fade-in {
+  animation: fadeIn 0.8s ease-out;
+}

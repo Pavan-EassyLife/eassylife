@@ -1,0 +1,336 @@
+/* ===== SERVICE PROVIDER PAGE RESPONSIVE STYLES ===== */
+/* Flutter-exact mobile UI with responsive web/tablet layouts */
+
+/* ===== MOBILE LAYOUT PROTECTION (≤ 767px) ===== */
+/* CRITICAL: Explicit mobile protection with higher specificity than existing mobile CSS */
+@media (max-width: 767px) {
+  /* Ensure service provider mobile layout is never overridden */
+  .service-provider-mobile-protection {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Ensure mobile service provider content is never affected */
+  .service-provider-mobile-protection .service-provider-content,
+  .service-provider-mobile-protection .service-provider-header,
+  .service-provider-mobile-protection .service-provider-banner,
+  .service-provider-mobile-protection .service-provider-list,
+  .service-provider-mobile-protection .service-provider-button {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* Additional protection for service provider components */
+  .service-provider-mobile-protection * {
+    box-sizing: border-box;
+  }
+
+  /* Ensure no desktop grid layouts apply on mobile */
+  .service-provider-mobile-protection .service-provider-desktop-container,
+  .service-provider-mobile-protection .service-provider-desktop-layout {
+    display: none !important;
+  }
+
+  /* Mobile-specific spacing following Flutter specifications */
+  .service-provider-mobile-spacing {
+    padding-top: 50px; /* Flutter: padding: EdgeInsets.only(top: 50.h) */
+  }
+
+  /* Mobile header banner - Flutter exact dimensions */
+  .service-provider-mobile-banner {
+    height: 220px; /* Flutter: height: 220.h */
+    background-color: #FCDFAD; /* Flutter: AppColor.lightOrange1 */
+  }
+
+  /* Mobile back button - Flutter exact positioning */
+  .service-provider-mobile-back-button {
+    position: absolute;
+    top: 10px; /* Flutter: top: 10.h */
+    left: 15px; /* Flutter: left: 15.w */
+    width: 30px; /* Flutter: width: 30.w */
+    height: 30px; /* Flutter: height: 30.h */
+    border-radius: 12px; /* Flutter: borderRadius: BorderRadius.circular(12.r) */
+    background-color: white;
+    box-shadow: 0 4px 16px rgba(238, 137, 42, 0.2); /* Flutter: AppShadow.homePackageBoxShadow */
+  }
+
+  /* Mobile service name section - Flutter exact spacing */
+  .service-provider-mobile-service-name {
+    padding: 0 24px; /* Flutter: EdgeInsets.symmetric(horizontal: AppSize.margin) */
+    margin-top: 30px; /* Flutter: SizedBox(height: 30.h) */
+    margin-bottom: 20px; /* Flutter: SizedBox(height: 20.h) */
+  }
+
+  /* Mobile provider list container - Flutter exact styling */
+  .service-provider-mobile-list-container {
+    margin: 0 24px; /* Flutter: EdgeInsets.symmetric(horizontal: AppSize.margin) */
+    padding: 0 16px; /* Flutter: EdgeInsets.symmetric(horizontal: AppSize.padding) */
+    background-color: #F6F6F6; /* Flutter: AppColor.lightGrey */
+    border-radius: 16px; /* Flutter: BorderRadius.circular(16.h) */
+  }
+
+  /* Mobile provider card - Flutter exact dimensions */
+  .service-provider-mobile-card {
+    margin-bottom: 16px; /* Flutter: EdgeInsets.only(bottom: 16.h) */
+    padding: 16px 18px 16px 13px; /* Flutter: EdgeInsets.only(left: 13.h, top: 16.h, bottom: 16.h, right: 18.w) */
+    background-color: white;
+    border-radius: 9px; /* Flutter: BorderRadius.circular(9.h) */
+  }
+
+  /* Mobile bottom button - Flutter exact styling */
+  .service-provider-mobile-bottom-button {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border-top-left-radius: 30px; /* Flutter: BorderRadius.only(topLeft: Radius.circular(30)) */
+    border-top-right-radius: 30px; /* Flutter: BorderRadius.only(topRight: Radius.circular(30)) */
+    box-shadow: 0 -10px 20px rgba(22, 22, 22, 0.1); /* Flutter: elevation: 10, shadowColor: AppColor.black */
+    padding: 20px 24px; /* Flutter: EdgeInsets.only(bottom: 20.h, top: 20.h) + horizontal margin */
+    z-index: 50;
+  }
+}
+
+/* ===== TABLET LAYOUT (768px - 1023px) ===== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Service provider container - specific naming to avoid conflicts */
+  .service-provider-desktop-container {
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Service provider responsive layout */
+  .service-provider-desktop-layout {
+    display: block;
+  }
+
+  /* Tablet header banner responsive height */
+  .service-provider-tablet-banner {
+    height: 280px; /* Responsive height for tablet */
+    background-color: #FCDFAD;
+    border-radius: 0 0 24px 24px; /* Add bottom border radius for tablet */
+  }
+
+  /* Tablet back button positioning */
+  .service-provider-tablet-back-button {
+    position: absolute;
+    top: 20px;
+    left: 2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 4px 16px rgba(238, 137, 42, 0.2);
+  }
+
+  /* Tablet service name section */
+  .service-provider-tablet-service-name {
+    padding: 0;
+    margin: 40px 0 30px 0;
+  }
+
+  /* Tablet provider list container */
+  .service-provider-tablet-list-container {
+    margin: 0;
+    padding: 24px;
+    background-color: #F6F6F6;
+    border-radius: 20px;
+  }
+
+  /* Tablet provider cards with enhanced spacing */
+  .service-provider-tablet-card {
+    margin-bottom: 20px;
+    padding: 20px 24px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .service-provider-tablet-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Tablet bottom button */
+  .service-provider-tablet-bottom-button {
+    position: relative;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(22, 22, 22, 0.1);
+    padding: 24px;
+    margin-top: 30px;
+  }
+
+  /* Ensure mobile protection class doesn't interfere on tablet */
+  .service-provider-mobile-protection {
+    width: auto !important;
+    max-width: none !important;
+    margin: auto !important;
+    padding: inherit !important;
+  }
+}
+
+/* ===== DESKTOP LAYOUT (1024px+) ===== */
+@media (min-width: 1024px) {
+  .service-provider-desktop-container {
+    max-width: 1024px;
+    padding: 0 2rem;
+  }
+
+  /* Desktop header banner enhanced */
+  .service-provider-desktop-banner {
+    height: 320px; /* Larger height for desktop */
+    background-color: #FCDFAD;
+    border-radius: 0 0 32px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Desktop back button enhanced */
+  .service-provider-desktop-back-button {
+    position: absolute;
+    top: 30px;
+    left: 2rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background-color: white;
+    box-shadow: 0 6px 20px rgba(238, 137, 42, 0.25);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .service-provider-desktop-back-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(238, 137, 42, 0.3);
+  }
+
+  /* Desktop service name section */
+  .service-provider-desktop-service-name {
+    padding: 0;
+    margin: 50px 0 40px 0;
+  }
+
+  /* Desktop provider list container */
+  .service-provider-desktop-list-container {
+    margin: 0;
+    padding: 32px;
+    background-color: #F6F6F6;
+    border-radius: 24px;
+  }
+
+  /* Desktop provider cards with enhanced hover effects */
+  .service-provider-desktop-card {
+    margin-bottom: 24px;
+    padding: 24px 28px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+  }
+
+  .service-provider-desktop-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Desktop bottom button enhanced */
+  .service-provider-desktop-bottom-button {
+    position: relative;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 6px 25px rgba(22, 22, 22, 0.12);
+    padding: 32px;
+    margin-top: 40px;
+  }
+
+  /* Desktop button hover effects */
+  .service-provider-desktop-add-to-cart-button {
+    transition: all 0.2s ease-in-out;
+  }
+
+  .service-provider-desktop-add-to-cart-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 163, 0, 0.3);
+  }
+}
+
+/* ===== COMMON RESPONSIVE UTILITIES ===== */
+
+/* Service provider page spacing utilities */
+.service-provider-section-spacing {
+  margin-bottom: 24px;
+}
+
+.service-provider-card-spacing {
+  margin-bottom: 16px;
+}
+
+/* Service provider typography responsive scaling */
+.service-provider-title {
+  font-size: clamp(18px, 4vw, 24px);
+  font-weight: bold;
+  color: #161616;
+}
+
+.service-provider-subtitle {
+  font-size: clamp(14px, 3vw, 18px);
+  font-weight: 600;
+  color: #161616;
+}
+
+.service-provider-body-text {
+  font-size: clamp(12px, 2.5vw, 16px);
+  color: #161616;
+}
+
+.service-provider-caption-text {
+  font-size: clamp(10px, 2vw, 14px);
+  color: #888888;
+}
+
+/* Service provider color utilities matching Flutter */
+.service-provider-bg-orange {
+  background-color: #FFA300; /* AppColor.orange */
+}
+
+.service-provider-bg-light-orange {
+  background-color: #FCDFAD; /* AppColor.lightOrange1 */
+}
+
+.service-provider-bg-light-grey {
+  background-color: #F6F6F6; /* AppColor.lightGrey */
+}
+
+.service-provider-text-orange {
+  color: #FFA300; /* AppColor.orange */
+}
+
+.service-provider-text-grey {
+  color: #888888; /* AppColor.grey */
+}
+
+.service-provider-text-green {
+  color: #52B46B; /* AppColor.green */
+}
+
+/* Service provider animation utilities */
+.service-provider-smooth-transition {
+  transition: all 0.2s ease-in-out;
+}
+
+.service-provider-hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.service-provider-hover-scale:hover {
+  transform: scale(1.02);
+}

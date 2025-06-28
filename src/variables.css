@@ -1,0 +1,38 @@
+:root {
+  --border: 210 40% 96.1%;
+  --input: 214 32% 91%;
+  --ring: 222.2 84% 4.9%;
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --primary: 39 100% 50%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 39 92% 87%;
+  --secondary-foreground: 0 0% 0%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --muted: 0 0% 87%;
+  --muted-foreground: 0 0% 53%;
+  --accent: 39 98% 93%;
+  --accent-foreground: 0 0% 0%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --radius: 0.5rem;
+
+  /* EassyLife Orange Gradient System */
+  --orange-light: #FFB84D;
+  --orange-primary: #FFA300;
+  --orange-dark: #E6920A;
+
+  /* Gradient Definitions */
+  --gradient-primary: linear-gradient(135deg, var(--orange-light), var(--orange-primary));
+  --gradient-primary-reverse: linear-gradient(135deg, var(--orange-primary), var(--orange-light));
+  --gradient-hover: linear-gradient(135deg, var(--orange-primary), var(--orange-dark));
+  --gradient-vertical: linear-gradient(to bottom, var(--orange-light), var(--orange-primary));
+  --gradient-horizontal: linear-gradient(to right, var(--orange-light), var(--orange-primary));
+
+  /* Gradient with opacity for overlays */
+  --gradient-overlay: linear-gradient(135deg, rgba(255, 184, 77, 0.9), rgba(255, 163, 0, 0.9));
+  --gradient-subtle: linear-gradient(135deg, rgba(255, 184, 77, 0.1), rgba(255, 163, 0, 0.1));
+}

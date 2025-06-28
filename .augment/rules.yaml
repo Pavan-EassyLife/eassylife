@@ -1,0 +1,318 @@
+# Web App Repository Specific Rules
+# This file contains rules specific to the React web application
+
+version: "1.0"
+
+repository:
+  name: "EassyAll Customer Web App"
+  type: "web_app"
+  technology_stack:
+    - "React"
+    - "TypeScript"
+    - "Vite"
+    - "Tailwind CSS"
+    - "Three.js"
+  
+  remote:
+    origin: "https://github.com/eassydev/customer_web_app.git"
+    default_branch: "main"
+
+# Web app structure rules
+structure:
+  required_files:
+    - "package.json"
+    - "package-lock.json"
+    - "README.md"
+    - ".gitignore"
+    - "index.html"
+    - "vite.config.js"
+    - "tailwind.config.cjs"
+    - "postcss.config.cjs"
+  
+  required_directories:
+    - "src/"
+    - "src/components/"
+    - "src/pages/"
+    - "src/hooks/"
+    - "src/utils/"
+    - "src/services/"
+    - "src/assets/"
+    - "public/"
+  
+  forbidden_files:
+    - "pubspec.yaml"
+    - "pubspec.lock"
+    - "*.dart"
+    - ".flutter-plugins"
+    - ".metadata"
+
+# React/Web development rules
+development:
+  node_version: ">=16.0.0"
+  package_manager: "npm"  # or "yarn", "pnpm"
+  
+  code_style:
+    linter: "eslint"
+    formatter: "prettier"
+    style_guide: "airbnb-typescript"
+    typescript: true
+  
+  testing:
+    framework: "vitest"  # or "jest"
+    coverage_threshold: 75
+    required_test_types:
+      - "unit_tests"
+      - "component_tests"
+      - "integration_tests"
+      - "e2e_tests"
+    test_patterns:
+      - "**/*.test.{ts,tsx}"
+      - "**/*.spec.{ts,tsx}"
+  
+  bundler: "vite"
+  css_framework: "tailwindcss"
+  
+  state_management:
+    preferred: "zustand"  # or "redux", "context"
+    architecture: "component_based"
+
+# Web-specific commit rules
+git_rules:
+  commit_message:
+    pattern: "^\\[WEBAPP\\]\\s+(feat|fix|docs|style|refactor|test|chore):\\s+.{10,}"
+    examples:
+      - "[WEBAPP] feat: add user dashboard component"
+      - "[WEBAPP] fix: resolve responsive layout issue"
+      - "[WEBAPP] refactor: optimize three.js animations"
+  
+  branch_naming:
+    pattern: "^(webapp/)?(feature|bugfix|hotfix|release)/[a-z0-9-]+$"
+    examples:
+      - "webapp/feature/user-dashboard"
+      - "webapp/bugfix/mobile-layout"
+      - "feature/3d-animations"
+  
+  pre_commit_hooks:
+    - name: "lint"
+      command: "npm run lint"
+    - name: "type-check"
+      command: "npm run type-check"
+    - name: "test"
+      command: "npm test"
+    - name: "build"
+      command: "npm run build"
+
+# File restrictions for web app
+restrictions:
+  max_file_size_mb: 5
+  
+  allowed_file_types:
+    source_code:
+      - ".js"
+      - ".jsx"
+      - ".ts"
+      - ".tsx"
+    styles:
+      - ".css"
+      - ".scss"
+      - ".sass"
+      - ".less"
+    markup:
+      - ".html"
+      - ".htm"
+    configuration:
+      - ".json"
+      - ".yml"
+      - ".yaml"
+      - ".env"
+      - ".env.example"
+      - ".env.local"
+      - ".env.development"
+      - ".env.production"
+    documentation:
+      - ".md"
+      - ".txt"
+    assets:
+      - ".png"
+      - ".jpg"
+      - ".jpeg"
+      - ".gif"
+      - ".svg"
+      - ".ico"
+      - ".webp"
+      - ".avif"
+    fonts:
+      - ".woff"
+      - ".woff2"
+      - ".ttf"
+      - ".otf"
+      - ".eot"
+    other:
+      - ".gitignore"
+      - ".eslintrc"
+      - ".prettierrc"
+      - "Dockerfile"
+      - ".dockerignore"
+  
+  forbidden_patterns:
+    - "*/node_modules/*"
+    - "*/dist/*"
+    - "*/build/*"
+    - "*/.next/*"
+    - "*/.nuxt/*"
+    - "*.dart"
+    - "pubspec.*"
+    - ".flutter-plugins*"
+    - ".metadata"
+    - "*/flutter/*"
+    - "*/android/*"
+    - "*/ios/*"
+
+# Web-specific security rules
+security:
+  secrets_detection: true
+  
+  forbidden_secrets:
+    - "api_key"
+    - "secret_key"
+    - "private_key"
+    - "access_token"
+    - "refresh_token"
+  
+  content_security_policy: true
+  
+  security_headers:
+    - "helmet"
+    - "cors"
+    - "csp"
+    - "hsts"
+  
+  dependency_security:
+    - "npm_audit"
+    - "snyk_scan"
+    - "dependency_check"
+
+# Performance rules for web app
+performance:
+  build_time_threshold_minutes: 3
+  bundle_size_threshold_mb: 2
+  
+  optimization:
+    - "code_splitting"
+    - "lazy_loading"
+    - "tree_shaking"
+    - "image_optimization"
+    - "font_optimization"
+    - "css_purging"
+  
+  web_vitals:
+    - "largest_contentful_paint"
+    - "first_input_delay"
+    - "cumulative_layout_shift"
+  
+  monitoring:
+    - "error_tracking"
+    - "performance_metrics"
+    - "user_analytics"
+    - "real_user_monitoring"
+
+# Browser compatibility
+browsers:
+  supported:
+    - "Chrome >= 90"
+    - "Firefox >= 88"
+    - "Safari >= 14"
+    - "Edge >= 90"
+  
+  polyfills:
+    - "core-js"
+    - "regenerator-runtime"
+  
+  progressive_enhancement: true
+  responsive_design: true
+
+# Build and deployment
+build:
+  environments:
+    - "development"
+    - "staging"
+    - "production"
+  
+  required_checks:
+    - "tests_pass"
+    - "lint_clean"
+    - "type_check"
+    - "build_success"
+    - "lighthouse_score"
+  
+  deployment_targets:
+    - "vercel"
+    - "netlify"
+    - "aws_s3"
+    - "github_pages"
+
+# Three.js specific rules (for animations)
+threejs:
+  version: ">=0.150.0"
+  
+  performance:
+    - "geometry_disposal"
+    - "texture_disposal"
+    - "animation_optimization"
+    - "render_loop_optimization"
+  
+  best_practices:
+    - "scene_management"
+    - "memory_management"
+    - "shader_optimization"
+    - "lighting_optimization"
+
+# Accessibility requirements
+accessibility:
+  wcag_level: "AA"
+  
+  required_features:
+    - "semantic_html"
+    - "aria_labels"
+    - "keyboard_navigation"
+    - "screen_reader_support"
+    - "color_contrast"
+  
+  testing:
+    - "axe_core"
+    - "lighthouse_accessibility"
+    - "manual_testing"
+
+# SEO requirements
+seo:
+  meta_tags: true
+  structured_data: true
+  sitemap: true
+  robots_txt: true
+  
+  performance:
+    - "page_speed"
+    - "mobile_friendly"
+    - "core_web_vitals"
+
+# Documentation requirements
+documentation:
+  component_documentation: true
+  storybook: true
+  
+  readme_sections:
+    - "installation"
+    - "development"
+    - "building"
+    - "testing"
+    - "deployment"
+    - "architecture"
+    - "contributing"
+  
+  code_comments:
+    required_for:
+      - "complex_components"
+      - "business_logic"
+      - "api_integrations"
+      - "three_js_scenes"
+      - "custom_hooks"

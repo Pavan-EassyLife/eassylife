@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import './variables.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Profile page animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px) rotate(90deg);
+  }
+  50% {
+    transform: translateY(-5px) translateX(-5px) rotate(180deg);
+  }
+  75% {
+    transform: translateY(-15px) translateX(3px) rotate(270deg);
+  }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 38 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 38 100% 87%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 0 0% 86.7%;
+    --muted-foreground: 0 0% 53.3%;
+    --accent: 38 100% 93%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 86.7%;
+    --input: 0 0% 86.7%;
+    --ring: 38 100% 50%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html, body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    height: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  #root {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+  }
+
+  /* Remove default focus outline and ensure orange focus ring */
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px #FFA301 !important;
+    border-color: #FFA301 !important;
+  }
+
+  /* Ensure accessibility for keyboard navigation */
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 2px #FFA301 !important;
+    border-color: #FFA301 !important;
+  }
+
+  /* Custom scrollbar styles */
+  .overflow-y-auto::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .overflow-y-auto::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: #FFA301;
+    border-radius: 3px;
+  }
+
+  .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: #e6920a;
+  }
+
+  /* Firefox scrollbar */
+  .overflow-y-auto {
+    scrollbar-width: thin;
+    scrollbar-color: #FFA301 #f1f1f1;
+  }
+
+  /* Hide scrollbar utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+}
+
+/* Mobile service grid - Defer to mobile.css for all styling */
+@media (max-width: 768px) {
+  /* Remove conflicting styles - let mobile.css handle everything */
+}

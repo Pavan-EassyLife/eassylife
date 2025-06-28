@@ -39,8 +39,8 @@ const ServiceDetailsContent = () => {
   const { selectedSegment } = useServiceDetailsContext();
 
   // Get primary address from context (matches Flutter constant.savedFinalAddress)
-  const { primaryAddress } = useAddressContext();
-
+  const { primaryAddress, fetchAddresses, hasAddress } = useAddressContext();
+  console.log("12",primaryAddress)
   // Use dynamic attributes hook for enhanced attribute management
   const {
     selectedAttributes,
@@ -78,8 +78,74 @@ const ServiceDetailsContent = () => {
     }
   }, [serviceId, subServiceId, fetchServiceDetails]);
 
+  // Fetch user's addresses when component mounts to ensure default address is available
+  useEffect(() => {
+    if (fetchAddresses && !hasAddress) {
+      console.log('🏠 ServiceDetails: Fetching user addresses...');
+      fetchAddresses();
+    }
+  }, [fetchAddresses, hasAddress]);
+
+  // Debug: Log address state changes
+  useEffect(() => {
+    const formattedPrimary = formatAddress(primaryAddress);
+    const formattedSelected = formatAddress(selectedAddress);
+
+    console.log('🏠 ServiceDetails: Address state updated:', {
+      hasAddress,
+      primaryAddress,
+      primaryAddressFormatted: primaryAddress?.formattedAddress,
+      primaryAddressFields: primaryAddress ? Object.keys(primaryAddress) : null,
+      formattedPrimaryAddress: formattedPrimary,
+      selectedAddress,
+      formattedSelectedAddress: formattedSelected,
+      willShowDefaultAddress: !selectedAddress && formattedPrimary,
+      willShowNoAddress: !selectedAddress && !formattedPrimary
+    });
+  }, [hasAddress, primaryAddress, selectedAddress]);
+
   const handleBack = () => {
     navigate(-1);
+  };
+
+  // Helper function to format address from different possible field structures
+  const formatAddress = (address) => {
+    if (!address) return null;
+
+    // Try formattedAddress first
+    if (address.formattedAddress) {
+      return address.formattedAddress;
+    }
+
+    // Try to build address from individual fields
+    const addressParts = [];
+
+    // Address line 1
+    if (address.address_line_1 || address.addressLine1 || address.street) {
+      addressParts.push(address.address_line_1 || address.addressLine1 || address.street);
+    }
+
+    // Address line 2
+    if (address.address_line_2 || address.addressLine2) {
+      addressParts.push(address.address_line_2 || address.addressLine2);
+    }
+
+    // City
+    if (address.city) {
+      addressParts.push(address.city);
+    }
+
+    // State
+    if (address.state) {
+      addressParts.push(address.state);
+    }
+
+    // Pincode/Zipcode
+    if (address.pincode || address.zipCode || address.postal_code) {
+      addressParts.push(address.pincode || address.zipCode || address.postal_code);
+    }
+
+    return addressParts.length > 0 ? addressParts.join(', ') : null;
   };
 
   // Address change handlers
@@ -92,6 +158,8 @@ const ServiceDetailsContent = () => {
     setIsAddressModalOpen(false);
     console.log('🏠 ServiceDetails: Address selected:', address);
   };
+
+
 
   const handleAddNewAddress = () => {
     setIsAddressModalOpen(false);
@@ -591,16 +659,23 @@ const ServiceDetailsContent = () => {
               <div className="flex items-center flex-1">
                 <MapPin className="w-5 h-5 text-gray-600 mr-3" />
                 <div className="flex-1">
-                  <span className={`text-sm ${selectedAddress ? 'text-gray-700' : 'text-gray-600'}`}>
+                  <span className={`text-sm ${selectedAddress ? 'text-gray-700' : formatAddress(primaryAddress) ? 'text-gray-700' : 'text-gray-500'}`}>
                     {selectedAddress
-                      ? `${selectedAddress.address_line_1 || selectedAddress.addressLine1 || ''}, ${selectedAddress.city || ''}, ${selectedAddress.state || ''}, ${selectedAddress.pincode || selectedAddress.zipCode || ''}`
-                      : primaryAddress?.formattedAddress
-                      || 'Lodha , powai, Mahatma Jyotiba Phule Nagar IIT Market, Powai, Mumbai, Maharashtra, 400076'
+                      ? formatAddress(selectedAddress)
+                      : formatAddress(primaryAddress) || 'No address selected'
                     }
                   </span>
-                  {selectedAddress && (
+                  {selectedAddress ? (
                     <div className="text-xs text-green-600 mt-1">
                       ✓ Custom address selected
+                    </div>
+                  ) : formatAddress(primaryAddress) ? (
+                    <div className="text-xs text-blue-600 mt-1">
+                      📍 Default address
+                    </div>
+                  ) : (
+                    <div className="text-xs text-orange-600 mt-1">
+                      Please select an address
                     </div>
                   )}
                 </div>

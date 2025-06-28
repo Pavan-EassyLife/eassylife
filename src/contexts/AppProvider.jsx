@@ -5,6 +5,7 @@ import { OrderProvider } from './OrderContext';
 import { CartProvider } from './CartContext';
 import { VipProvider } from './VipContext';
 import { MobileNavigationProvider } from './MobileNavigationContext';
+import { SettingsProvider } from './SettingsContext';
 import { ToastProvider } from '../components/ui/toast';
 
 /**
@@ -15,17 +16,19 @@ const AppProvider = ({ children }) => {
   return (
     <ToastProvider>
       <AuthProvider>
-        <AddressProvider>
-          <CartProvider>
-            <VipProvider>
-              <OrderProvider>
-                <MobileNavigationProvider>
-                  {children}
-                </MobileNavigationProvider>
-              </OrderProvider>
-            </VipProvider>
-          </CartProvider>
-        </AddressProvider>
+        <SettingsProvider>
+          <AddressProvider>
+            <CartProvider>
+              <VipProvider>
+                <OrderProvider>
+                  <MobileNavigationProvider>
+                    {children}
+                  </MobileNavigationProvider>
+                </OrderProvider>
+              </VipProvider>
+            </CartProvider>
+          </AddressProvider>
+        </SettingsProvider>
       </AuthProvider>
     </ToastProvider>
   );

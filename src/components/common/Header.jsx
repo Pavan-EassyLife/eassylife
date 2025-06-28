@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useAddressContext } from '../../contexts/AddressContext';
+import { useSettings } from '../../contexts/SettingsContext';
 
 import logoImg from '../../assets/images/eassylife_logo.png';
 
@@ -14,11 +15,16 @@ const Header = ({
   isAuthenticated: propIsAuthenticated = null, // Allow override from props
 }) => {
   const navigate = useNavigate();
-  const { user, logout, hasAddress } = useAuthContext();
+  const { user, logout } = useAuthContext();
   const {
     getDisplayAddress,
     getShortDisplayAddress
   } = useAddressContext();
+  const {
+    formattedPrimaryPhone,
+    initiateCall,
+    hasPhoneNumber
+  } = useSettings();
 
   // Header state
   const [activeTab, setActiveTab] = useState(currentPage === 'other' ? 'home' : currentPage);
@@ -105,6 +111,7 @@ const Header = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+  
 
   return (
     <>
@@ -248,9 +255,18 @@ const Header = ({
               <Button
                 variant="ghost"
                 className="flex flex-col items-center py-2 px-3 h-auto transition-colors duration-300 text-gray-600 hover:text-palette-orange hover:bg-transparent"
+                onClick={() => hasPhoneNumber ? initiateCall() : console.warn('No phone number available')}
+                title={hasPhoneNumber ? `Call ${formattedPrimaryPhone}` : 'Phone number not available'}
               >
                 <Phone className="w-5 h-5 mb-1" />
-                <span className="text-sm font-medium hidden sm:block">Call</span>
+                <span className="text-sm font-medium hidden sm:block">
+                  {hasPhoneNumber ? 'Call' : 'Call'}
+                </span>
+                {hasPhoneNumber && (
+                  <span className="text-xs text-gray-500 hidden lg:block mt-0.5">
+                    {formattedPrimaryPhone}
+                  </span>
+                )}
               </Button>
 
               {/* Cart Button */}

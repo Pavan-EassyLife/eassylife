@@ -15,9 +15,9 @@ class SettingsService {
   async getCurrentSettings() {
     try {
       console.log('🚀 SettingsService: Fetching current settings...');
-      
+
       const response = await axiosInstance.get(API_ENDPOINTS.SETTINGS);
-      
+
       console.log('✅ SettingsService: Settings fetched successfully');
       return {
         success: response.data.status || true,
@@ -31,6 +31,143 @@ class SettingsService {
         error: error.response?.data?.message || error.message || 'Failed to fetch settings'
       };
     }
+  }
+
+  /**
+   * Get application settings including phone numbers
+   * Calls the new v2.0.0 settings endpoint
+   * @returns {Promise<Object>} Application settings data
+   */
+  async getApplicationSettings() {
+    try {
+      console.log('🔧 SettingsService: Fetching application settings...');
+
+      const response = await axiosInstance.get('/settings');
+
+      console.log('🔧 SettingsService: Application settings response:', response.data);
+      console.log('🔧 SettingsService: Response status:', response.data?.status);
+      console.log('🔧 SettingsService: Response data length:', response.data?.data?.length);
+
+      if (response.data?.status && response.data?.data) {
+        const settings = response.data.data;
+
+        // Process settings to extract phone numbers and other relevant data
+        const processedSettings = {
+          phoneNumbers: [],
+          otherSettings: {}
+        };
+
+        // Extract phone numbers from the settings array
+        if (Array.isArray(settings)) {
+          settings.forEach(setting => {
+            console.log('🔧 Processing setting:', setting.attribute_name, '=', setting.attribute_value);
+
+            if (setting.attribute_name === 'CALLING_NUMBER') {
+              console.log('📞 Found CALLING_NUMBER:', setting.attribute_value);
+              processedSettings.phoneNumbers.push({
+                id: setting.id,
+                number: setting.attribute_value,
+                type: 'calling'
+              });
+            } else {
+              // Store other settings
+              processedSettings.otherSettings[setting.attribute_name] = {
+                id: setting.id,
+                value: setting.attribute_value
+              };
+            }
+          });
+        }
+
+        console.log('📞 Final phone numbers found:', processedSettings.phoneNumbers);
+
+        console.log('🔧 SettingsService: Processed application settings:', processedSettings);
+
+        return {
+          success: true,
+          data: processedSettings,
+          rawData: settings
+        };
+      } else {
+        throw new Error('Invalid response format from settings API');
+      }
+    } catch (error) {
+      console.error('❌ SettingsService: Error fetching application settings:', error);
+
+      return {
+        success: false,
+        error: error.message || 'Failed to fetch application settings',
+        data: {
+          phoneNumbers: [],
+          otherSettings: {}
+        }
+      };
+    }
+  }
+
+  /**
+   * Get the primary phone number for calling
+   * @returns {Promise<string|null>} Primary phone number or null
+   */
+  async getPrimaryPhoneNumber() {
+    try {
+      const settingsResponse = await this.getApplicationSettings();
+
+      if (settingsResponse.success && settingsResponse.data.phoneNumbers.length > 0) {
+        // Return the first phone number as primary
+        return settingsResponse.data.phoneNumbers[0].number;
+      }
+
+      return null;
+    } catch (error) {
+      console.error('❌ SettingsService: Error getting primary phone number:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Format phone number for display
+   * @param {string} phoneNumber - Raw phone number
+   * @returns {string} Formatted phone number
+   */
+  formatPhoneNumber(phoneNumber) {
+    if (!phoneNumber) return '';
+
+    // Remove any non-digit characters
+    const cleaned = phoneNumber.replace(/\D/g, '');
+
+    // Format Indian phone numbers (10 digits)
+    if (cleaned.length === 10) {
+      return `+91 ${cleaned.slice(0, 5)} ${cleaned.slice(5)}`;
+    }
+
+    // Format if already includes country code
+    if (cleaned.length === 12 && cleaned.startsWith('91')) {
+      return `+91 ${cleaned.slice(2, 7)} ${cleaned.slice(7)}`;
+    }
+
+    // Return as-is if format doesn't match expected patterns
+    return phoneNumber;
+  }
+
+  /**
+   * Initiate a phone call
+   * @param {string} phoneNumber - Phone number to call
+   */
+  initiateCall(phoneNumber) {
+    if (!phoneNumber) {
+      console.warn('⚠️ SettingsService: No phone number provided for call');
+      return;
+    }
+
+    // Clean the phone number for tel: link
+    const cleaned = phoneNumber.replace(/\D/g, '');
+    const telLink = `tel:+91${cleaned.length === 10 ? cleaned : cleaned.slice(-10)}`;
+
+    console.log('📞 SettingsService: Initiating call to:', telLink);
+
+    // Open tel: link
+    window.location.href = telLink;
   }
 
   /**

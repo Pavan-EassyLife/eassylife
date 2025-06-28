@@ -2,6 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Outlet, useLocation } from "react-router-dom";
 import { Header } from "./common";
+import Footer from "./common/Footer";
 import { MobileLayout } from "./mobile";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useMobileNavigation } from "../contexts/MobileNavigationContext";
@@ -29,6 +30,9 @@ const Layout = () => {
 
   // Only show header for authenticated routes (not landing page)
   const showHeader = location.pathname !== '/landing';
+
+  // Only show footer for authenticated routes (not landing page)
+  const showFooter = location.pathname !== '/landing';
 
   return (
     <>
@@ -61,6 +65,11 @@ const Layout = () => {
         <main className="relative w-full max-w-full">
           <Outlet />
         </main>
+
+        {/* Footer - shown on all authenticated pages */}
+        {showFooter && !shouldHideDesktopHeader() && (
+          <Footer />
+        )}
       </div>
     </>
   );

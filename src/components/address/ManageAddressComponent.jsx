@@ -46,12 +46,13 @@ const AddressCard = React.memo(({
 
   // Get user name from address or use default
   const getUserName = useCallback(() => {
-    return address.name || address.userName || 'testShubham Pawar';
+    console.log('Address:', address);
+    return address.name || address.userName ;
   }, [address]);
 
   // Get phone number from address or use default
   const getPhoneNumber = useCallback(() => {
-    return address.phoneNumber || address.phone || '+8329094534';
+    return address.phoneNumber || address.phone ;
   }, [address]);
 
   return (
